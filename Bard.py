@@ -147,14 +147,20 @@ class Chatbot:
         if not chat_data:
             return {"content": f"Google Bard encountered an error: {resp.content}."}
         json_chat_data = json.loads(chat_data)
+        print(f"JSON_CHAT_DATA:{json_chat_data} ")
         results = {
-            "content": json_chat_data[0][0],
+            "content": json_chat_data[0],
             "conversation_id": json_chat_data[1][0],
             "response_id": json_chat_data[1][1],
             "factualityQueries": json_chat_data[3],
             "textQuery": json_chat_data[2][0] if json_chat_data[2] is not None else "",
             "choices": [{"id": i[0], "content": i[1]} for i in json_chat_data[4]],
         }
+        print("----------------------")
+        print(json_chat_data[4][1])
+        print("----------------------")
+
+
         self.conversation_id = results["conversation_id"]
         self.response_id = results["response_id"]
         self.choice_id = results["choices"][0]["id"]
